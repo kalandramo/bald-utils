@@ -1,6 +1,6 @@
 module github.com/kalandramo/bald-utils/password
 
-go 1.25.0
+go 1.26.5
 
 require golang.org/x/crypto v0.50.0
 

@@ -1,6 +1,6 @@
 module github.com/kalandramo/bald-utils/aggregator
 
-go 1.25.0
+go 1.26.5
 
 require (
 	github.com/graph-gophers/dataloader/v7 v7.1.3

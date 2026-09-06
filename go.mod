@@ -1,6 +1,6 @@
 module github.com/kalandramo/bald-utils
 
-go 1.25.0
+go 1.26.5
 
 require (
 	github.com/gobwas/glob v0.2.3

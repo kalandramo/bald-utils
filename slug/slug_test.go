@@ -85,5 +85,5 @@ func TestGenerate(t *testing.T) {
 	assert.Equal(t, textSub, "sand-is-hot")
 	t.Log(textSub)
 
-	t.Logf(Generate("【无标题】"))
+	t.Log(Generate("【无标题】"))
 }

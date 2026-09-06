@@ -1,8 +1,7 @@
 module github.com/kalandramo/bald-utils/mapper
 
-go 1.23.0
+go 1.26.5
 
-toolchain go1.24.3
 
 require github.com/jinzhu/copier v0.4.0
 

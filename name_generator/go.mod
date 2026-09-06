@@ -1,7 +1,6 @@
 module github.com/kalandramo/bald-utils/name_generator
 
-go 1.23.0
+go 1.26.5
 
-toolchain go1.23.2
 
 replace github.com/kalandramo/bald-utils => ../

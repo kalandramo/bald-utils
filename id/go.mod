@@ -1,6 +1,6 @@
 module github.com/kalandramo/bald-utils/id
 
-go 1.25.0
+go 1.26.5
 
 require (
 	github.com/bwmarrin/snowflake v0.3.0

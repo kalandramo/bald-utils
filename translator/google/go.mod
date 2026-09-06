@@ -1,6 +1,6 @@
 module github.com/kalandramo/bald-utils/translator/google
 
-go 1.25.0
+go 1.26.5
 
 require (
 	cloud.google.com/go/translate v1.12.7
