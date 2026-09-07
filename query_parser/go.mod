@@ -1,6 +1,6 @@
 module github.com/kalandramo/bald-utils/query_parser
 
-go 1.26.5
+go 1.27.1
 
 require (
 	github.com/go-kratos/kratos/v2 v2.9.1

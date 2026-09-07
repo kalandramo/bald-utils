@@ -1,14 +1,11 @@
 module github.com/kalandramo/bald-utils/translator/alibaba
 
-go 1.26.5
-
-require (
-	github.com/alibabacloud-go/darabonba-openapi/v2 v2.1.15
-	github.com/alibabacloud-go/tea v1.4.0
-)
+go 1.27.1
 
 require (
 	github.com/alibabacloud-go/alimt-20190107 v1.0.0
+	github.com/alibabacloud-go/darabonba-openapi/v2 v2.1.15
+	github.com/alibabacloud-go/tea v1.4.0
 	github.com/stretchr/testify v1.11.1
 )
 

@@ -1,7 +1,6 @@
 module github.com/kalandramo/bald-utils/slug
 
-go 1.26.5
-
+go 1.27.1
 
 require (
 	github.com/gosimple/slug v1.15.0

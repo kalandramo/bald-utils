@@ -1,7 +1,6 @@
 module github.com/kalandramo/bald-utils/ddl_parser
 
-go 1.26.5
-
+go 1.27.1
 
 require github.com/stretchr/testify v1.11.1
 

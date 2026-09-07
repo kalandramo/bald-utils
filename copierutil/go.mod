@@ -1,13 +1,10 @@
 module github.com/kalandramo/bald-utils/copierutil
 
-go 1.26.5
+go 1.27.1
 
 require (
 	github.com/jinzhu/copier v0.4.0
 	github.com/kalandramo/bald-utils v1.1.37
-)
-
-require (
 	github.com/stretchr/testify v1.11.1
 	google.golang.org/protobuf v1.36.11
 )

@@ -1,11 +1,11 @@
 module github.com/kalandramo/bald-utils/rand
 
-go 1.26.5
+go 1.27.1
 
 require (
 	github.com/google/uuid v1.6.0
-	github.com/stretchr/testify v1.11.1
 	github.com/kalandramo/bald-utils v1.1.39
+	github.com/stretchr/testify v1.11.1
 )
 
 require (

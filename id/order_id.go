@@ -13,10 +13,13 @@ import (
 type idCounter uint32
 
 func (c *idCounter) Increase() uint32 {
-	cur := *c
-	atomic.AddUint32((*uint32)(c), 1)
-	atomic.CompareAndSwapUint32((*uint32)(c), 1000, 0)
-	return uint32(cur)
+	for {
+		cur := atomic.LoadUint32((*uint32)(c))
+		next := (cur + 1) % 1000
+		if atomic.CompareAndSwapUint32((*uint32)(c), cur, next) {
+			return cur
+		}
+	}
 }
 
 var orderIdIndex idCounter
@@ -33,7 +36,7 @@ func GenerateOrderIdWithRandom(prefix string, tm *time.Time) string {
 
 	randNum := rand.IntN(10000) // 生成0-9999之间的随机数
 
-	return fmt.Sprintf("%s%s%d", prefix, timestamp, randNum)
+	return fmt.Sprintf("%s%s%04d", prefix, timestamp, randNum)
 }
 
 // GenerateOrderIdWithIncreaseIndex 生成20位订单号，前缀+时间+自增长索引
