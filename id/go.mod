@@ -5,7 +5,7 @@ go 1.27.1
 require (
 	github.com/bwmarrin/snowflake v0.3.0
 	github.com/google/uuid v1.6.0
-	github.com/kalandramo/bald-utils v1.1.38
+	github.com/kalandramo/bald-utils v0.1.0
 	github.com/lithammer/shortuuid/v4 v4.2.0
 	github.com/rs/xid v1.6.0
 	github.com/segmentio/ksuid v1.0.4
@@ -22,5 +22,3 @@ require (
 	github.com/rogpeppe/go-internal v1.13.1 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
-
-replace github.com/kalandramo/bald-utils => ../
