@@ -1,7 +1,6 @@
 package id
 
 import (
-	"errors"
 	"sync"
 
 	"github.com/bwmarrin/snowflake"
@@ -38,23 +37,20 @@ func (sfNode *SnowflakeNode) GenerateString() string {
 
 func NewSnowflakeID(workerId int64) (int64, error) {
 	// 64 位 ID = 41 位时间戳 + 10 位工作节点 ID + 12 位序列号
-
-	var node *SnowflakeNode
-	var err error
-	find, ok := snowflakeNodeMap.Load(workerId)
-	if ok {
-		node = find.(*SnowflakeNode)
-	} else {
-		node, err = NewSnowflakeNode(workerId)
-		if err != nil {
-			//log.Println(err)
-			return 0, err
-		}
-		snowflakeNodeMap.Store(workerId, node)
+	//
+	// UT2 修复：LoadOrStore 原子化 check-then-act——并发 miss 时两 goroutine
+	// 各建同 workerId 的 Node、后写覆盖先写、败者节点仍被本地引用继续出号
+	// （snowflake 去重只在单 Node 内部，双 Node 并发可产出重复 int64）。
+	// 败者丢弃自建节点，统一用先入库的节点。
+	if find, ok := snowflakeNodeMap.Load(workerId); ok {
+		return find.(*SnowflakeNode).Generate(), nil
 	}
-	if node == nil {
-		//log.Println("snowflake node is nil")
-		return 0, errors.New("snowflake node is nil")
+	node, err := NewSnowflakeNode(workerId)
+	if err != nil {
+		return 0, err
+	}
+	if actual, loaded := snowflakeNodeMap.LoadOrStore(workerId, node); loaded {
+		node = actual.(*SnowflakeNode)
 	}
 
 	return node.Generate(), nil

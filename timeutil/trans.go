@@ -1,6 +1,7 @@
 package timeutil
 
 import (
+	"sync"
 	"time"
 
 	"google.golang.org/protobuf/types/known/durationpb"
@@ -9,18 +10,33 @@ import (
 	"github.com/kalandramo/bald-utils/trans"
 )
 
+// UT6 修复：时区全局变量加互斥保护（原 check-then-act 竞态）；
+// LoadLocation 失败（精简容器缺 tzdata）回退 time.UTC 而非缓存 nil——
+// 原实现失败时所有 tm.In(GetDefaultTimeLocation()) 触发
+// "time: missing Location" panic。
+var timeLocationMu sync.Mutex
 var defaultTimeLocation *time.Location
 
-func RefreshDefaultTimeLocation(name string) *time.Location {
-	if defaultTimeLocation == nil {
-		defaultTimeLocation, _ = time.LoadLocation(name)
+func loadLocationOrUTC(name string) *time.Location {
+	loc, err := time.LoadLocation(name)
+	if err != nil || loc == nil {
+		return time.UTC
 	}
+	return loc
+}
+
+func RefreshDefaultTimeLocation(name string) *time.Location {
+	timeLocationMu.Lock()
+	defer timeLocationMu.Unlock()
+	defaultTimeLocation = loadLocationOrUTC(name)
 	return defaultTimeLocation
 }
 
 func GetDefaultTimeLocation() *time.Location {
+	timeLocationMu.Lock()
+	defer timeLocationMu.Unlock()
 	if defaultTimeLocation == nil {
-		RefreshDefaultTimeLocation(DefaultTimeLocationName)
+		defaultTimeLocation = loadLocationOrUTC(DefaultTimeLocationName)
 	}
 	return defaultTimeLocation
 }
